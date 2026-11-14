@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="#ea1d2c" name="theme-color"/>
+  <title>
+   Meu Controle de Entregas
+  </title>
+  <link rel="stylesheet" href="style.css">
+ </head>
+ <!-- ============================================================
+      ESTRUTURA DA PÁGINA (HTML)
+      Conteúdo, textos, campos e seções.
+      ============================================================ -->
+ <body>
+  <div class="layout">
+   <aside class="sidebar">
+    <div class="brand">
+     🚲 Minhas Entregas
+    </div>
+    <button class="nav active" data-view="principal">
+     📅 Principal
+    </button>
+    <button class="nav" data-view="mensal">
+     📊 Controle mensal
+    </button>
+    <button class="nav" data-view="historico">
+     🕘 Histórico
+    </button>
+   </aside>
+   <main class="content">
+    <section class="view" id="view-principal">
+     <header class="head">
+      <div class="logo">
+       🚲
+      </div>
+      <div>
+       <h1>
+        Controle de Entregas
+       </h1>
+       <p>
+        Planeje a semana e registre o que realmente ganhou.
+       </p>
+      </div>
+     </header>
+     <section class="panel current">
+      <div class="sectionhead">
+       <h2>
+        📍 Progresso do mês atual
+       </h2>
+       <span class="tag" id="mesAtualTag">
+       </span>
+      </div>
+      <div class="three">
+       <div class="stat">
+        <small>
+         Ganhei até agora
+        </small>
+        <strong class="red" id="realMesPrincipal">
+         R$ 0
+        </strong>
+       </div>
+       <div class="stat">
+        <small>
+         Meta mensal
+        </small>
+        <strong id="metaMesPrincipal">
+         R$ 0
+        </strong>
+       </div>
+       <div class="stat">
+        <small>
+         Falta ganhar
+        </small>
+        <strong id="faltaMesPrincipal">
+         R$ 0
+        </strong>
+       </div>
+      </div>
+      <div class="bar">
+       <div class="fill" id="barraPrincipal">
+       </div>
+      </div>
+      <p id="textoPrincipal">
+      </p>
+     </section>
+     <section class="panel">
+      <h2>
+       ✍️ Registrar entregas realizadas
+      </h2>
+      <div class="two">
+       <div class="field">
+        <label for="dataReal">
+         Data
+        </label>
+        <input id="dataReal" type="date"/>
+       </div>
+       <div class="field">
+        <label for="qtdReal">
+         Quantidade de entregas
+        </label>
+        <input id="qtdReal" min="1" step="1" type="number" value="0"/>
+       </div>
+       <div class="field">
+        <label for="ganhoReal">
+         Valor recebido nas entregas (R$)
+        </label>
+        <input id="ganhoReal" inputmode="decimal" min="0" placeholder="Ex.: 00,00" step="0.01" type="number"/>
+       </div>
+       <div class="field">
+        <label for="gorjetaReal">
+         Gorjetas recebidas (R$)
+        </label>
+        <input id="gorjetaReal" inputmode="decimal" min="0" step="0.01" type="number" value="0"/>
+       </div>
+      </div>
+      <div class="actions">
+       <button id="salvarReal">
+        + Registrar dia
+       </button>
+       <button class="outline" id="limparReal">
+        Limpar campos
+       </button>
+      </div>
+      <p class="muted">
+       Informe o ganho das entregas e gorjetas.
+      </p>
+      <p aria-live="polite" class="muted" id="msgReal">
+      </p>
+     </section>
+     <section class="panel">
+      <h2>
+       📅 Planejamento semanal
+      </h2>
+      <p class="muted">
+       Esta tabela é apenas uma projeção e não altera os ganhos reais.
+      </p>
+      <div class="two">
+       <div class="field">
+        <label for="valor">
+         Média estimada por entrega (R$)
+        </label>
+        <input id="valor" min="0" step="0.5" type="number" value="7.5"/>
+       </div>
+       <div class="field">
+        <label for="objetivo">
+         Meta mensal editável (R$)
+        </label>
+        <input id="objetivo" min="1" step="50" type="number" value="900"/>
+       </div>
+      </div>
+      <div class="spacer" id="days">
+      </div>
+     </section>
+     <section class="panel">
+      <h2>
+       💰 Resultado planejado
+      </h2>
+      <div class="two">
+       <div class="stat">
+        <small>
+         Entregas por semana
+        </small>
+        <strong id="qtd">
+         0
+        </strong>
+       </div>
+       <div class="stat">
+        <small>
+         Ganho semanal previsto
+        </small>
+        <strong class="red" id="sem">
+         R$ 0
+        </strong>
+       </div>
+       <div class="stat">
+        <small>
+         Mensal (4 semanas)
+        </small>
+        <strong id="mes">
+         R$ 0
+        </strong>
+       </div>
+       <div class="stat">
+        <small>
+         Média mensal anualizada
+        </small>
+        <strong id="media">
+         R$ 0
+        </strong>
+       </div>
+      </div>
+      <div class="bar">
+       <div class="fill" id="barraPlan">
+       </div>
+      </div>
+      <p id="metaPlan">
+      </p>
+     </section>
+    </section>
+    <section class="view" hidden="" id="view-mensal">
+     <header class="head">
+      <div class="logo">
+       📊
+      </div>
+      <div>
+       <h1>
+        Controle mensal
+       </h1>
+       <p>
+        Ganhos reais, gorjetas e metas do ano.
+       </p>
+      </div>
+     </header>
+     <section class="panel current">
+      <div class="sectionhead">
+       <h2 id="tituloAtual">
+        Mês atual
+       </h2>
+       <span class="tag">
+        DESTAQUE
+       </span>
+      </div>
+      <div class="three">
+       <div class="stat">
+        <small>
+         Recebido
+        </small>
+        <strong id="realAtual">
+         R$ 0
+        </strong>
+       </div>
+       <div class="stat">
+        <small>
+         Falta para a meta
+        </small>
+        <strong id="faltaAtual">
+         R$ 0
+        </strong>
+       </div>
+       <div class="stat">
+        <small>
+         Entregas registradas
+        </small>
+        <strong id="qtdAtual">
+         0
+        </strong>
+       </div>
+      </div>
+      <div class="bar">
+       <div class="fill" id="barraReal">
+       </div>
+      </div>
+      <p id="textoReal">
+      </p>
+     </section>
+     <section class="panel">
+      <div class="sectionhead">
+       <h2>
+        Ganhos por mês
+       </h2>
+       <div class="field year">
+        <label for="ano">
+         Ano
+        </label>
+        <select id="ano">
+        </select>
+       </div>
+      </div>
+      <div class="info">
+       Os ganhos são somados automaticamente pelos registros diários. Se você já tinha preenchido valores na versão antiga, eles permanecem como saldo anterior e podem ser corrigidos abaixo.
+      </div>
+      <div class="monthgrid spacer" id="monthgrid">
+      </div>
+      <div class="two spacer">
+       <div class="stat">
+        <small>
+         Total recebido no ano
+        </small>
+        <strong id="totalAno">
+         R$ 0
+        </strong>
+       </div>
+       <div class="stat">
+        <small>
+         Falta para as metas do ano
+        </small>
+        <strong id="faltaAno">
+         R$ 0
+        </strong>
+       </div>
+      </div>
+     </section>
+    </section>
+    <section class="view" hidden="" id="view-historico">
+     <header class="head">
+      <div class="logo">
+       🕘
+      </div>
+      <div>
+       <h1>
+        Histórico de entregas
+       </h1>
+       <p>
+        Consulte, edite ou exclua registros diários.
+       </p>
+      </div>
+     </header>
+     <section class="panel">
+      <div class="sectionhead">
+       <h2>
+        Registros salvos
+       </h2>
+       <div class="field year">
+        <label for="historicoMes">
+         Mês
+        </label>
+        <input id="historicoMes" type="month"/>
+       </div>
+      </div>
+      <div id="historicoLista">
+      </div>
+      <div class="actions">
+       <button class="outline" id="exportar">
+        Exportar backup JSON
+       </button>
+       <button class="alt" id="importar">
+        Importar backup
+       </button>
+       <input accept="application/json,.json" hidden="" id="arquivoImport" type="file"/>
+      </div>
+     </section>
+    </section>
+    <footer>
+     Valores brutos, sem descontos de combustível/manutenção. Dados guardados neste navegador. Visual inspirado nas cores do iFood; projeto independente, sem vínculo oficial.
+    </footer>
+   </main>
+  </div>
+  <script src="script.js"></script>
+ </body>
+</html>
+
